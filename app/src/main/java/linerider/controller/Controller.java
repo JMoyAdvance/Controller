@@ -22,14 +22,11 @@ import static android.bluetooth.BluetoothAdapter.ACTION_REQUEST_ENABLE;
 public class Controller extends AppCompatActivity
 {
 
-    Button paired, start, left, right;
+    Button paired;
     private BluetoothAdapter BA = null;
-    private Set pairedDevices;
+    private Set<BluetoothDevice> pairedDevices;
     ListView lv;
-
-    String address = null;
-    BluetoothSocket BS = null;
-    private boolean isConnected = false;
+    public String EXTRA_ADDRESS = "20:16:03:25:64:40";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,46 +34,21 @@ public class Controller extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controller);
 
-        start = (Button)findViewById(R.id.start);
-        left = (Button)findViewById(R.id.left);
-        right = (Button)findViewById(R.id.right);
-
         BA = BluetoothAdapter.getDefaultAdapter();
         lv = (ListView)findViewById(R.id.listView);
+        ArrayList list = new ArrayList();
 
         if(BA == null)
         {
             Toast.makeText(getApplicationContext(), "Bluetooth Device Not Available", Toast.LENGTH_LONG).show();
-            finish();
         }
-        else
+        if (!BA.isEnabled())
         {
-            if (BA.isEnabled())
-            {
-
-            }
-            else
-            {
-                Intent turnBTon = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(turnBTon, 1);
-            }
+            Intent turnBTon = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(turnBTon, 1);
         }
-    }
 
-    paired.setOnClickListener(new View.OnClickListener()
-    {
-        public void onClick(View v)
-        {
-            pairedDevicesList();
-        }
-    });
-
-
-    private void pairedDevicesList()
-    {
         pairedDevices = BA.getBondedDevices();
-        ArrayList list = new ArrayList();
-
         if(pairedDevices.size() > 0)
         {
             for(BluetoothDevice bt : pairedDevices)
@@ -84,14 +56,11 @@ public class Controller extends AppCompatActivity
                 list.add(bt.getName() + "\n" + bt.getAddress());
             }
         }
-        else
-        {
-            Toast.makeText(getApplicationContext(), "No Paired Bluetooth Devices Found", Toast.LENGTH_LONG).show();
-        }
-        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(myListClickListener);
     }
+
 
     private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener()
     {
@@ -101,25 +70,10 @@ public class Controller extends AppCompatActivity
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
             // Make an intent to start next activity.
-            Intent i = new Intent(DeviceList.this, ledControl.class);
+            Intent i = new Intent(Controller.this, GameControl.class);
             //Change the activity.
-            i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
+            i.putExtra(EXTRA_ADDRESS, address);
             startActivity(i);
         }
     };
-
-    private void start()
-    {
-
-    }
-
-    private void left()
-    {
-
-    }
-
-    private void right()
-    {
-
-    }
 }
