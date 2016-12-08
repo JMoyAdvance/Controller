@@ -12,30 +12,39 @@
     tools:context="linerider.controller.Controller">
 
     <Button
-        android:text="Start"
+        android:text="Right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/start" />
+        android:id="@+id/right"
+        android:layout_alignBaseline="@+id/left"
+        android:layout_alignBottom="@+id/left"
+        android:layout_toEndOf="@+id/start" />
 
     <Button
         android:text="Left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/start"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="142dp"
-        android:id="@+id/left" />
+        android:id="@+id/left"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/start"
+        android:layout_toStartOf="@+id/start" />
+
+    <ListView
+        android:layout_height="match_parent"
+        android:layout_below="@+id/right"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="89dp"
+        android:headerDividersEnabled="false"
+        android:layout_width="match_parent"
+        android:id="@+id/listView" />
 
     <Button
-        android:text="Right"
+        android:text="Start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:id="@+id/right"
-        android:layout_alignBaseline="@+id/left"
-        android:layout_alignBottom="@+id/left"
-        android:layout_toEndOf="@+id/start" />
+        android:id="@+id/start"
+        android:layout_marginTop="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
