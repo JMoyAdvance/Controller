@@ -1,14 +1,11 @@
 package linerider.controller;
 
-import android.bluetooth.BluetoothSocket;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothAdapter;
 import android.view.View;
-import android.app.ProgressDialog;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,14 +13,8 @@ public class GameControl extends AppCompatActivity
 {
 
     Button start, left, right;
-    String address = null;
-    BluetoothSocket BS = null;
-    private ProgressDialog progress;
-    private boolean isBtConnected = false;
-    Bluetooth bluetoothService;
+    Bluetooth bluetoothConnect;
     BluetoothDevice Device;
-
-    private Handler myHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,9 +36,8 @@ public class GameControl extends AppCompatActivity
                 System.out.println(device.getName() + "\n" + device.getAddress());
             }
         }
-        android.os.Handler handler = new android.os.Handler();
-        bluetoothService = new Bluetooth();
-        bluetoothService.connect();
+        bluetoothConnect = new Bluetooth();
+        bluetoothConnect.connect();
 
         start.setOnClickListener(new View.OnClickListener()
         {
@@ -77,19 +67,19 @@ public class GameControl extends AppCompatActivity
     private void startGame()
     {
         byte[] message =  Integer.toString(0).getBytes();
-        bluetoothService.write(message);
+        bluetoothConnect.write(message);
     }
 
     private void moveLeft()
     {
         byte[] message =  Integer.toString(1).getBytes();
-        bluetoothService.write(message);
+        bluetoothConnect.write(message);
     }
 
     private void moveRight()
     {
         byte[] message =  Integer.toString(2).getBytes();
-        bluetoothService.write(message);
+        bluetoothConnect.write(message);
     }
 }
 

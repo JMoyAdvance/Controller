@@ -41,7 +41,7 @@ public class Bluetooth
         this.connect();
     }
 
-    public synchronized void connect() {
+    public void connect() {
         Log.d(TAG, "Connecting to: " + myDevice.getName() + " - " + myDevice.getAddress());
         // Start the thread to connect with the given device
 
