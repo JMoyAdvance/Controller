@@ -1,9 +1,7 @@
 package linerider.controller;
 
-import android.bluetooth.BluetoothSocket;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -17,8 +15,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Set;
 
-import static android.bluetooth.BluetoothAdapter.ACTION_REQUEST_ENABLE;
-
 public class Controller extends AppCompatActivity
 {
 
@@ -26,7 +22,7 @@ public class Controller extends AppCompatActivity
     private BluetoothAdapter BA = null;
     private Set<BluetoothDevice> pairedDevices;
     ListView lv;
-    public String EXTRA_ADDRESS = "20:16:03:25:64:40";
+    public static String EXTRA_ADDRESS = "device_address";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
