@@ -49,6 +49,18 @@ public class Bluetooth
         connectThread.start();
     }
 
+    public void connected(BluetoothSocket socket, BluetoothDevice device) {
+        Log.d(TAG, "connected to: " + device.getName());
+
+        if (connectThread != null) {
+            connectThread.cancel();
+            connectThread = null;
+        }
+        // Start the thread to manage the connection and perform transmissions
+        connectedThread = new ConnectedThread(socket);
+        connectedThread.start();
+    }
+
     private class ConnectThread extends Thread
     {
         private final BluetoothSocket mmSocket;
@@ -79,6 +91,7 @@ public class Bluetooth
                 cancel();
                 return;
             }
+            connected(mmSocket, mmDevice);
         }
 
         public void cancel()
@@ -96,10 +109,8 @@ public class Bluetooth
 
     }
     public void write(byte[] out) {
-        // Create temporary object
-        ConnectedThread r = connectedThread;
-        // Perform the write unsynchronized
-        r.write(out);
+        ConnectedThread send = connectedThread;
+        send.write(out);
     }
 
     private class ConnectedThread extends Thread
